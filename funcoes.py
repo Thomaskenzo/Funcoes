@@ -65,17 +65,20 @@ def read_and_create_feather(path_file,sep=','):
   file_feather = f'{filename.split(".")[0]}.feather'
   extension = filename.split('.')[-1]
   try:
-    base = pd.read_feather(file_feather)
+    base = pd.read_feather(f'{path}{file_feather}')
     print(f'Reading {path}{file_feather} instead')
   except Exception as e:
     if extension == 'csv':
+      print(f'Lendo {path_file}')
       base = pd.read_csv(path_file,sep=sep)
     elif extension == 'xlsx':
+      print(f'Lendo {path_file}')
       base = pd.read_excel(path_file)
     else:
       print(f'Extension: {extension}. (.csv) or (.xlsx) only.')
-      return
+      raise e
     base.to_feather(f'{path}{file_feather}')
     print(f'{path}{file_feather} created.')
   return base
 #----------#----------#----------#----------#----------##----------#----------#----------#----------#----------#
+
